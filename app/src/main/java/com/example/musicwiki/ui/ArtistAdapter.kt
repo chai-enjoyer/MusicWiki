@@ -1,5 +1,6 @@
-package com.example.musicwiki
+package com.example.musicwiki.ui
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,8 +8,8 @@ import android.widget.ImageView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.musicwiki.R
 import com.example.musicwiki.data.Artist
-import com.example.musicwiki.databinding.FragmentHome
 
 class ArtistAdapter(private val artists: List<Artist>) :
     RecyclerView.Adapter<ArtistAdapter.ArtistViewHolder>() {
@@ -17,6 +18,7 @@ class ArtistAdapter(private val artists: List<Artist>) :
     inner class ArtistViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val artistImage: ImageView = itemView.findViewById(R.id.artist_image)
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArtistViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -31,11 +33,14 @@ class ArtistAdapter(private val artists: List<Artist>) :
             .load(artist.imageUrl)
             .into(holder.artistImage)
 
+        val bundle = Bundle()
+        bundle.putString("artistId", artist.id)
+
         // Set click listener for navigation
-        holder.itemView.setOnClickListener {
-            val action = HomeFragmentDirections.actionHomeFragmentToArtistInfoFragment(artist.id)
-            holder.itemView.findNavController().navigate(action)
-        }
+        holder.itemView.findNavController().navigate(
+            R.id.action_homeFragment_to_artistInfoFragment, // Replace with your action ID
+            bundle
+        )
     }
 
     override fun getItemCount(): Int = artists.size

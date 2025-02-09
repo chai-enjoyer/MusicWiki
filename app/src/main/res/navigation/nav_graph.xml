@@ -24,6 +24,9 @@
 
     <fragment
         android:id="@+id/artistInfoFragment"
-        android:name="com.example.musicwiki.ui.artistinfo.ArtistInfoFragment"
-        tools:layout="@layout/fragment_artist_info" />
+        android:name="com.example.musicwiki.ui.artistinfo.ArtistInfoFragment">
+        <argument
+            android:name="artistId"
+            app:argType="string" />
+    </fragment>
 </navigation>

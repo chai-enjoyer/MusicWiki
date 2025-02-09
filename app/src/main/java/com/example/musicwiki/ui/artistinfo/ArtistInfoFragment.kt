@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.example.musicwiki.databinding.FragmentArtistInfoBinding
 
 class ArtistInfoFragment : Fragment() {
+    val artistId = arguments?.getString("artistId")
     private lateinit var binding: FragmentArtistInfoBinding
     private lateinit var viewModel: ArtistInfoViewModel
 

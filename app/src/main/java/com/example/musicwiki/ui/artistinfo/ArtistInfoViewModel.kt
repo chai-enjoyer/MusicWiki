@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.musicwiki.data.Artist
+import com.example.musicwiki.network.ArtistsResponse
 import com.example.musicwiki.network.RetrofitInstance
 import kotlinx.coroutines.launch
 
@@ -15,10 +16,16 @@ class ArtistInfoViewModel : ViewModel() {
     fun getArtistDetails(artistId: String) {
         viewModelScope.launch {
             try {
-                val response = RetrofitInstance.api.getArtistDetails(artistId)
-                _artist.value = response
+                val response = ArtistsResponse.Artists(artistId)
+                if (response.isSuccessful) {
+                    // Process the response body
+                    val artistDetails = response.body()
+                    // Update LiveData or StateFlow with the result
+                } else {
+                    // Handle API error
+                }
             } catch (e: Exception) {
-                e.printStackTrace()
+                // Handle network or other exceptions
             }
         }
     }

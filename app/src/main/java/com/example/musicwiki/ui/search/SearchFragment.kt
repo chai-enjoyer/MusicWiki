@@ -5,32 +5,29 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.musicwiki.databinding.FragmentSearchBinding
+import com.example.musicwiki.ui.ArtistAdapter
+import com.example.musicwiki.data.Artist
 
 class SearchFragment : Fragment() {
+
     private lateinit var binding: FragmentSearchBinding
-    private lateinit var viewModel: SearchViewModel
+    private lateinit var artistAdapter: ArtistAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         binding = FragmentSearchBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
 
-        val adapter = ArtistAdapter()
-        binding.recyclerView.layoutManager = LinearLayoutManager(context)
-        binding.recyclerView.adapter = adapter
+        // Initialize the adapter with an empty list or your data source
+        artistAdapter = ArtistAdapter(emptyList())
 
-        binding.searchButton.setOnClickListener {
-            val query = binding.searchInput.text.toString()
-            viewModel.searchArtists(query)
-        }
-
-        viewModel.searchResults.observe(viewLifecycleOwner) { artists ->
-            adapter.submitList(artists)
+        // Set up the RecyclerView
+        binding.recyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = artistAdapter
         }
 
         return binding.root
